@@ -26,6 +26,17 @@ These dependencies will be automatically installed via conda or pip if they are 
 ```
 pip install -r requirements.txt
 ```
+## 3. Download the model ##
+Please download the model from:
+```
+https://drive.google.com/drive/folders/1FKMXMTElLTxjviTbKdIrj8Ok4M-ntfV0?usp=sharing
+```  
+or  
+```
+https://pan.baidu.com/s/1xjQolZnrZK0wo8cf-svneA  
+code:981v  
+```  
+Put the **dnn.pth** into **model**.
 
 # Usage #
 We provide example workflow for ApuShape and ApuRefine.
