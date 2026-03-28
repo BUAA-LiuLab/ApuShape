@@ -12,6 +12,12 @@ ApuShape is human-in-the-loop annotation software specifically designed for Deep
 
 This integrated approach enables rapid creation of high-quality nucleus annotation datasets with expert-level accuracy while significantly reducing manual effort.
 
+## Demo Video
+
+We provide a full workflow demonstration of ApuShape:
+
+[![ApuShape Full Workflow Demo](https://img.youtube.com/vi/mJtW1Ci1DQY/maxresdefault.jpg)](https://youtu.be/mJtW1Ci1DQY)
+
 ## System Requirements
 
 - **RAM**: 8 GB minimum, 16 GB or higher recommended
