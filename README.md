@@ -16,7 +16,7 @@ This integrated approach enables rapid creation of high-quality nucleus annotati
 
 We provide a full workflow demonstration of ApuShape:
 
-[![ApuShape Full Workflow Demo](https://img.youtube.com/vi/mJtW1Ci1DQY/maxresdefault.jpg)](https://youtu.be/mJtW1Ci1DQY)
+[![ApuShape Full Workflow Demo](https://img.youtube.com/vi/mJtW1Ci1DQY/maxresdefault.jpg)](https://youtu.be/Q0-2AZIVpQg)
 
 ## System Requirements
 
