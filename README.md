@@ -33,7 +33,7 @@ ApuShape supports GPU acceleration for enhanced performance. Requirements:
 
 ## Documentation
 
-Detailed instructions are available in the [ApuShape_UserGuide.pdf](ApuShape UserGuide.pdf).
+Detailed instructions are available in the [[ApuShape_UserGuide.pdf](ApuShape UserGuide.pdf)](https://github.com/BUAA-LiuLab/ApuShape/blob/main/ApuShape%20UserGuide.pdf).
 
 **Note**: For first-time users, we strongly recommend reading the user guide before operating the software.
 
