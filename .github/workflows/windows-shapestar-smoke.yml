@@ -1,0 +1,73 @@
+name: Windows ShapeStar smoke test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/windows-shapestar-smoke.yml"
+      - "ci_smoke/**"
+  pull_request:
+    paths:
+      - ".github/workflows/windows-shapestar-smoke.yml"
+      - "ci_smoke/**"
+
+env:
+  SMOKE_RELEASE_TAG: smoke-assets-v1
+  SMOKE_EXE_ASSET: ShapeStarSmoke-win-x64.zip
+  SMOKE_MODEL_PATTERN: "*.pth"
+
+jobs:
+  shapestar-smoke:
+    name: ShapeStar smoke on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, windows-2025]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download smoke-test assets
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          New-Item -ItemType Directory -Force -Path ci_smoke\assets | Out-Null
+          New-Item -ItemType Directory -Force -Path ci_smoke\bin | Out-Null
+          New-Item -ItemType Directory -Force -Path ci_smoke\models | Out-Null
+
+          gh release download $env:SMOKE_RELEASE_TAG `
+            --repo $env:GITHUB_REPOSITORY `
+            --pattern $env:SMOKE_EXE_ASSET `
+            --dir ci_smoke\assets
+
+          gh release download $env:SMOKE_RELEASE_TAG `
+            --repo $env:GITHUB_REPOSITORY `
+            --pattern $env:SMOKE_MODEL_PATTERN `
+            --dir ci_smoke\models
+
+          Expand-Archive `
+            -Path (Join-Path "ci_smoke\assets" $env:SMOKE_EXE_ASSET) `
+            -DestinationPath ci_smoke\bin `
+            -Force
+
+          Get-ChildItem -Recurse ci_smoke\bin | Select-Object FullName, Length
+          Get-ChildItem ci_smoke\models | Select-Object FullName, Length
+
+      - name: Run ShapeStar smoke test
+        shell: pwsh
+        run: |
+          .\ci_smoke\run_windows_smoke.ps1
+
+      - name: Upload smoke-test outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shapestar-smoke-${{ matrix.os }}
+          path: ci_smoke/results/
+          retention-days: 90
