@@ -13,7 +13,6 @@ on:
       - "ci_smoke/**"
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
   SMOKE_RELEASE_TAG: smoke-assets-v1
   SMOKE_EXE_ASSET: ShapeStarSmoke-win-x64.zip
   SMOKE_MODEL_PATTERN: "*.pth"
@@ -68,7 +67,7 @@ jobs:
 
       - name: Upload smoke-test outputs
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v7
         with:
           name: shapestar-smoke-${{ matrix.os }}
           path: ci_smoke/results/
