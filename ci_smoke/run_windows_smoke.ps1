@@ -67,7 +67,7 @@ foreach ($image in $Images) {
 Write-Host "Output directory: $Output"
 Write-Host "Confidence threshold: $Confidence"
 
-& $Exe -i $Images -m $Model -o $Output --device cpu --confidence $Confidence --min-contours 0
+& $Exe -i $Images -m $Model -o $Output --device cpu --confidence $Confidence --keep-boundary --min-contours 0
 $code = $LASTEXITCODE
 if ($code -ne 0) {
     throw "ShapeStarSmoke failed with exit code $code"
