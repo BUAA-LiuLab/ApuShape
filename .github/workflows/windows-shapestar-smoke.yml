@@ -1,5 +1,5 @@
-name: ShapeStar smoke test
-run-name: ShapeStar smoke test
+name: Windows ShapeStar smoke test
+run-name: Windows ShapeStar smoke test
 
 on:
   workflow_dispatch:
