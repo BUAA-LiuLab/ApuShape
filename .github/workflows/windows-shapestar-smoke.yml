@@ -1,4 +1,5 @@
 name: ShapeStar smoke test
+run-name: ShapeStar smoke test
 
 on:
   workflow_dispatch:
