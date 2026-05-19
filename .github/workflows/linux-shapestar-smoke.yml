@@ -1,0 +1,77 @@
+name: Linux ShapeStar smoke test
+run-name: Linux ShapeStar smoke test
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/linux-shapestar-smoke.yml"
+      - "ci_smoke/**"
+  pull_request:
+    paths:
+      - ".github/workflows/linux-shapestar-smoke.yml"
+      - "ci_smoke/**"
+
+env:
+  SMOKE_RELEASE_TAG: smoke-assets-v1
+  SMOKE_EXE_ASSET: ShapeStarSmoke-linux-x64.tar.gz
+  SMOKE_MODEL_PATTERN: "*.pth"
+
+jobs:
+  shapestar-smoke:
+    name: ShapeStar smoke on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, ubuntu-24.04]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Install Linux runtime libraries
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libglib2.0-0 libgomp1
+
+      - name: Download smoke-test assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          mkdir -p ci_smoke/assets ci_smoke/bin ci_smoke/models
+
+          gh release download "$SMOKE_RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "$SMOKE_EXE_ASSET" \
+            --dir ci_smoke/assets
+
+          gh release download "$SMOKE_RELEASE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "$SMOKE_MODEL_PATTERN" \
+            --dir ci_smoke/models
+
+          tar -xzf "ci_smoke/assets/$SMOKE_EXE_ASSET" -C ci_smoke/bin
+
+          find ci_smoke/bin -maxdepth 3 -type f -print
+          find ci_smoke/models -maxdepth 1 -type f -print
+
+      - name: Run ShapeStar smoke test
+        shell: bash
+        run: |
+          bash ci_smoke/run_unix_smoke.sh
+
+      - name: Upload smoke-test outputs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: shapestar-smoke-${{ matrix.os }}
+          path: ci_smoke/results/
+          retention-days: 90
+
