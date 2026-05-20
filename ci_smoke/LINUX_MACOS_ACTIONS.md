@@ -146,10 +146,10 @@ ubuntu-22.04
 ubuntu-24.04
 ```
 
-The macOS workflow uses one stable Apple Silicon runner by default:
+The macOS workflow uses one current Apple Silicon runner by default:
 
 ```text
-macos-15
+macos-26
 ```
 
 If a second macOS configuration is needed, add another currently supported
