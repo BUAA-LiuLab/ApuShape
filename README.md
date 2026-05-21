@@ -1,7 +1,7 @@
 # ApuShape: Human-in-the-Loop Annotation Software
 
 Please download the latest version of ApuShape from the [Releases](https://github.com/BUAA-LiuLab/ApuShape/releases) section.
-
+Windows x64 is the primary supported platform for ApuShape. Linux x86_64 and macOS arm64 packages are provided as experimental support starting from v1.0.2.
 ## Overview
 
 ApuShape is human-in-the-loop annotation software specifically designed for Deep Visual Proteomics (DVP) and large-scale spatial omics studies. It addresses the critical need for accurate nucleus annotation in fluorescence microscopy images by integrating:
